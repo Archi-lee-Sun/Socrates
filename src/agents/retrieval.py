@@ -1,13 +1,8 @@
 from ..config import TAVILY_API_KEY
 from tavily import AsyncTavilyClient
-from sentence_transformers import SentenceTransformer
+from ..embeddings import embed_batch
 
 tavily_client = AsyncTavilyClient(api_key=TAVILY_API_KEY)
-model = SentenceTransformer("all-MiniLM-L6-v2")
-
-
-def embed_batch(texts: list[str]) -> list[list[float]]:
-    return model.encode(texts).tolist()
 
 
 async def get_debate_data(topic: str, max_results: int = 20) -> list[dict]:
