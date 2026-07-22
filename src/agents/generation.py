@@ -26,7 +26,7 @@ def _format_evidence(rows: list[dict]) -> str:
         res += f"source_url : {row['source_url']} content : {row['content']} \n"
     return res
 
-async def generate_turn(debate_id: str, decay_base: float = 0.8):
+async def generate_turn(debate_id: str, decay_base: float = 0.8, previous_feedback: str | None = None):
     res = await schedule_next(debate_id, decay_base)
 
     agent_id = res["agent_id"]
@@ -53,7 +53,8 @@ async def generate_turn(debate_id: str, decay_base: float = 0.8):
         res["attack_candidates"],
         res["defend_candidates"],
         res["propose_available"],
-        evidence
+        evidence,
+        previous_feedback
     )
 
     response = await groq_client.chat.completions.create(

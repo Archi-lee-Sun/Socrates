@@ -9,6 +9,7 @@ class Node:
     falsification_condition: str
     status: str
     round: int
+    embedding: list[float] | None = None
 
     @classmethod
     def from_row(cls, row: dict) -> "Node":

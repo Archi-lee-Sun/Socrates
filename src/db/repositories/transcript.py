@@ -1,7 +1,8 @@
 from ..client import get_client
 
 async def insert(debate_id: str, round: int, agent_id: str | None, node_id: str | None,
-                  edge_id: str | None, content: str, accepted: bool) -> None:
+                  edge_id: str | None, content: str, accepted: bool,
+                  rejection_reason: str | None) -> None:
     client = await get_client()
 
     await client.table("transcript").insert({
@@ -11,7 +12,8 @@ async def insert(debate_id: str, round: int, agent_id: str | None, node_id: str 
         "node_id": node_id,
         "edge_id": edge_id,
         "content": content,
-        "accepted": accepted
+        "accepted": accepted,
+        "rejection_reason": rejection_reason
     }).execute()
 
 
